@@ -10,7 +10,9 @@ import (
 func main() {
 	router := NewRouter()
 
-	router.Handle("GET", "/", HandleHome)
+	router.GET("/", HandleHome)
+	// Add the route handler
+	// router.Handle("POST", "/register", HandleUserCreate)
 
 	router.ServeFiles(
 		"/assets/*filepath",
@@ -22,9 +24,10 @@ func main() {
 	log.Fatal(http.ListenAndServe(":3000", middleware))
 }
 
-// Creates a new router
+// NewRouter creates a new router
 func NewRouter() *httprouter.Router {
 	router := httprouter.New()
-	router.NotFound = func(http.ResponseWriter, *http.Request) {}
+	// TODO: need to be revisited -> outdated code
+	router.NotFound = func(http.ResponseWriter, *http.Request, _ httprouter.Params) {}
 	return router
 }
